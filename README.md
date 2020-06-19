@@ -2,8 +2,14 @@
 
 Projeto contendo backend do sistema de viagens.
 
-projeto pode ser iniciado usando:
+Para instalar dependências:
 
 ```
-npm start
+npm install
+```
+
+Para executar local
+
+```
+npm run dev
 ```

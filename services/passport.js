@@ -5,6 +5,16 @@ const moogose = require('mongoose');
 
 const User = moogose.model('user');
 
+passport.serializeUser((user, done) => {
+	done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+	User.findById(id).then((user) => {
+		done(null, user);
+	});
+});
+
 passport.use(
 	new GoogleStrategy(
 		{
@@ -13,12 +23,19 @@ passport.use(
 			callbackURL: '/auth/callback',
 		},
 		(accessToken, refreshToken, profile, done) => {
-			console.log('access token: ', accessToken);
-			console.log('refresh token: ', refreshToken);
-			console.log('profile: ', profile);
-			new User({
-				googleId: profile.id,
-			}).save();
+			User.findOne({ googleId: profile.id }).then((existingUser) => {
+				if (existingUser) {
+					done(null, existingUser);
+				} else {
+					new User({
+						googleId: profile.id,
+						nome: profile._json.name,
+						email: profile._json.email,
+					})
+						.save()
+						.then((user) => done(null, user));
+				}
+			});
 		}
 	)
 );
