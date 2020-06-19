@@ -19,7 +19,7 @@ moongose.connect(keys.mongoURI, {
 });
 
 app.get('/', (req, res) => {
-	res.send({ olarr: 'mundo' });
+	res.send({ olarr: 'mundo teste' });
 });
 
 const PORT = process.env.PORT || 8585;
