@@ -18,10 +18,6 @@ moongose.connect(keys.mongoURI, {
 	useUnifiedTopology: true,
 });
 
-app.get('/', (req, res) => {
-	res.send({ olarr: 'mundo teste' });
-});
-
 const PORT = process.env.PORT || 8585;
 app.listen(PORT);
 console.log('aplicação de pé na porta: ' + PORT);
