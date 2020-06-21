@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Header from './Header';
+
 const Lading = () => <h2>Lading</h2>;
 const Cart = () => <h2>Cart</h2>;
 const Dashbord = () => <h2>Dashbord</h2>;
