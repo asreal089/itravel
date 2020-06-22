@@ -3,11 +3,10 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Header from './Header';
-
-const Lading = () => <h2>Lading</h2>;
-const Home = () => <h2>Home</h2>;
-const Cart = () => <h2>Cart</h2>;
-const Dashbord = () => <h2>Dashbord</h2>;
+import Travels from './Travels';
+import Lading from './Landing';
+import Home from './Home';
+import Cart from './Cart';
 
 class App extends Component {
 	componentDidMount() {
@@ -25,8 +24,8 @@ class App extends Component {
 						<Route exact={true} path="/cart" component={Cart} />
 						<Route
 							exact={true}
-							path="/dashbord"
-							component={Dashbord}
+							path="/travels"
+							component={Travels}
 						/>
 					</div>
 				</BrowserRouter>
