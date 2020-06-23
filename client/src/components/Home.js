@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Home extends Component {
 	componentDidMount() {
@@ -11,4 +12,8 @@ class Home extends Component {
 		return <h1>Sua Home, onde você deve ver suas viagens</h1>;
 	}
 }
-export default Home;
+function mapStateToProps({ auth }) {
+	return { auth };
+}
+
+export default connect(mapStateToProps)(Home);

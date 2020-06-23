@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Cart extends Component {
 	componentDidMount() {
@@ -10,4 +11,8 @@ class Cart extends Component {
 		return <h1>Essa é a pagina com carrinho da aplicação</h1>;
 	}
 }
-export default Cart;
+function mapStateToProps({ auth }) {
+	return { auth };
+}
+
+export default connect(mapStateToProps)(Cart);
