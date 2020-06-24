@@ -35,11 +35,11 @@ class Travels extends Component {
 	}
 
 	handleChangeDataIda(event) {
-		this.setState({ data_ida: event });
+		this.setState({ data_ida: convert(event) });
 	}
 
 	handleChangeDataVolta(event) {
-		this.setState({ data_volta: event });
+		this.setState({ data_volta: convert(event) });
 	}
 
 	handleSubmit(event) {
@@ -86,13 +86,6 @@ class Travels extends Component {
 										closeOnClick: true,
 										constrainWidth: true,
 										coverTrigger: true,
-										hover: false,
-										inDuration: 150,
-										onCloseEnd: null,
-										onCloseStart: null,
-										onOpenEnd: null,
-										onOpenStart: null,
-										outDuration: 250,
 									},
 								}}
 								value={this.state.cidade_origem}
@@ -109,6 +102,7 @@ class Travels extends Component {
 							<DatePicker
 								id="DatePicker-1"
 								options={{
+									format: 'dddd/mm/yyyy',
 									yearRange: 10,
 								}}
 								value={this.state.data_ida}
@@ -131,13 +125,6 @@ class Travels extends Component {
 										closeOnClick: true,
 										constrainWidth: true,
 										coverTrigger: true,
-										hover: false,
-										inDuration: 150,
-										onCloseEnd: null,
-										onCloseStart: null,
-										onOpenEnd: null,
-										onOpenStart: null,
-										outDuration: 250,
 									},
 								}}
 								value={this.state.cidade_destino}
@@ -154,88 +141,7 @@ class Travels extends Component {
 							<DatePicker
 								id="DatePicker-5"
 								options={{
-									autoClose: false,
-									container: null,
-									defaultDate: null,
-									disableDayFn: null,
-									disableWeekends: false,
-									events: [],
-									firstDay: 0,
-									format: 'mmm dd, yyyy',
-									i18n: {
-										cancel: 'Cancel',
-										clear: 'Clear',
-										done: 'Ok',
-										months: [
-											'January',
-											'February',
-											'March',
-											'April',
-											'May',
-											'June',
-											'July',
-											'August',
-											'September',
-											'October',
-											'November',
-											'December',
-										],
-										monthsShort: [
-											'Jan',
-											'Feb',
-											'Mar',
-											'Apr',
-											'May',
-											'Jun',
-											'Jul',
-											'Aug',
-											'Sep',
-											'Oct',
-											'Nov',
-											'Dec',
-										],
-										nextMonth: '›',
-										previousMonth: '‹',
-										weekdays: [
-											'Sunday',
-											'Monday',
-											'Tuesday',
-											'Wednesday',
-											'Thursday',
-											'Friday',
-											'Saturday',
-										],
-										weekdaysAbbrev: [
-											'S',
-											'M',
-											'T',
-											'W',
-											'T',
-											'F',
-											'S',
-										],
-										weekdaysShort: [
-											'Sun',
-											'Mon',
-											'Tue',
-											'Wed',
-											'Thu',
-											'Fri',
-											'Sat',
-										],
-									},
-									isRTL: false,
-									maxDate: null,
-									minDate: null,
-									onClose: null,
-									onDraw: null,
-									onOpen: null,
-									onSelect: null,
-									parse: null,
-									setDefaultDate: false,
-									showClearBtn: false,
-									showDaysInNextAndPreviousMonths: false,
-									showMonthAfterYear: false,
+									format: 'dddd/mm/yyyy',
 									yearRange: 10,
 								}}
 								value={this.state.data_volta}
@@ -262,6 +168,13 @@ class Travels extends Component {
 }
 function mapStateToProps({ auth, hotel }) {
 	return { auth, hotel };
+}
+
+function convert(str) {
+	var date = new Date(str),
+		mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+		day = ('0' + date.getDate()).slice(-2);
+	return [date.getFullYear(), mnth, day].join('-');
 }
 
 export default connect(mapStateToProps, actions)(Travels);
