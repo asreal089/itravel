@@ -18,7 +18,7 @@ class Cart extends Component {
 					<Col m={6} s={12}>
 						<Card
 							actions={[
-								<a key="2" href="#">
+								<a key="2" href="/home">
 									Pagar
 								</a>,
 							]}

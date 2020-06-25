@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Select } from 'react-materialize';
-import { DatePicker } from 'react-materialize';
 import { Button } from 'react-materialize';
+const axios = require('axios');
 
 class Travels extends Component {
 	constructor(props) {
@@ -11,8 +11,6 @@ class Travels extends Component {
 		this.state = {
 			cidade_origem: '',
 			cidade_destino: '',
-			data_ida: '',
-			data_volta: '',
 		};
 
 		this.handleChangeCidadeOrigem = this.handleChangeCidadeOrigem.bind(
@@ -21,8 +19,6 @@ class Travels extends Component {
 		this.handleChangeCidadeDestino = this.handleChangeCidadeDestino.bind(
 			this
 		);
-		this.handleChangeDataIda = this.handleChangeDataIda.bind(this);
-		this.handleChangeDataVolta = this.handleChangeDataVolta.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -34,147 +30,95 @@ class Travels extends Component {
 		this.setState({ cidade_destino: event.target.value });
 	}
 
-	handleChangeDataIda(event) {
-		this.setState({ data_ida: convert(event) });
-	}
-
-	handleChangeDataVolta(event) {
-		this.setState({ data_volta: convert(event) });
-	}
-
-	handleSubmit(event) {
+	async handleSubmit(event) {
+		event.preventDefault();
 		alert(
 			'cidade origem: ' +
 				this.state.cidade_origem +
 				'\n cidade destino: ' +
-				this.state.cidade_destino +
-				'\n data ida :' +
-				this.state.data_ida +
-				'\n data volta :' +
-				this.state.data_volta
+				this.state.cidade_destino
 		);
-		event.preventDefault();
+		var res = await getHotels(this.state.cidade_destino);
+		console.log(res.data);
 	}
 
 	componentDidMount() {
 		if (!this.props.auth) {
 			this.props.history.push(`/`);
 		}
-
-		console.log(this.props.fetchHotel());
 	}
 	render() {
 		return (
-			<div>
-				<form onSubmit={this.handleSubmit}>
-					<div
-						style={{
-							display: 'flex',
-							flexWrap: 'wrap',
-						}}
-					>
-						<div style={{ width: '45%', alignSelf: 'left' }}>
-							<p>Escolha origem e data de partida:</p>
-							<Select
-								id="Select-9"
-								multiple={false}
-								options={{
-									classes: '',
-									dropdownOptions: {
-										alignment: 'left',
-										autoTrigger: true,
-										closeOnClick: true,
-										constrainWidth: true,
-										coverTrigger: true,
-									},
-								}}
-								value={this.state.cidade_origem}
-								onChange={this.handleChangeCidadeOrigem}
-							>
-								<option disabled value="">
-									Escolha sua origem
-								</option>
-								<option value="saopaulo">São Paulo</option>
-								<option value="londres">Londres</option>
-								<option value="paris">Paris</option>
-							</Select>
-
-							<DatePicker
-								id="DatePicker-1"
-								options={{
-									format: 'dddd/mm/yyyy',
-									yearRange: 10,
-								}}
-								value={this.state.data_ida}
-								onChange={this.handleChangeDataIda}
-							>
-								Ida
-							</DatePicker>
-						</div>
-						<div style={{ width: '10%' }}></div>
-						<div style={{ width: '45%', alignSelf: 'left' }}>
-							<p>Escolha tambem destino e data da volta:</p>
-							<Select
-								id="Select-9"
-								multiple={false}
-								options={{
-									classes: '',
-									dropdownOptions: {
-										alignment: 'left',
-										autoTrigger: true,
-										closeOnClick: true,
-										constrainWidth: true,
-										coverTrigger: true,
-									},
-								}}
-								value={this.state.cidade_destino}
-								onChange={this.handleChangeCidadeDestino}
-							>
-								<option disabled value="">
-									Escolha seu destino
-								</option>
-								<option value="saopaulo">São Paulo</option>
-								<option value="londres">Londres</option>
-								<option value="paris">Paris</option>
-							</Select>
-
-							<DatePicker
-								id="DatePicker-5"
-								options={{
-									format: 'dddd/mm/yyyy',
-									yearRange: 10,
-								}}
-								value={this.state.data_volta}
-								onChange={this.handleChangeDataVolta}
-							>
-								Volta
-							</DatePicker>
-						</div>
+			<div style={{}}>
+				<form>
+					<div style={{ width: '45%', float: 'left' }}>
+						<p>Escolha cidade de Origem</p>
+						<Select
+							name="cidade_origem"
+							id="cidade_origem"
+							onChange={this.handleChangeCidadeOrigem}
+						>
+							<option value="" disabled selected>
+								Origem
+							</option>
+							<option value="sao paulo">São Paulo</option>
+							<option value="rio de janeiro">
+								Rio de Janeiro
+							</option>
+							<option value="curitiba">Curitiba</option>
+							<option value="belo horizonte">
+								Belo Horizonte
+							</option>
+						</Select>
 					</div>
-					<Button
-						node="button"
-						style={{
-							marginRight: '5px',
-							backgroundColor: 'Purple',
-						}}
-						waves="light"
-					>
-						Pesquisar
-					</Button>
+					<div style={{ width: '10%' }} />
+					<div style={{ width: '45%', float: 'right' }}>
+						<p>Escolha seu destino</p>
+						<Select
+							name="cidade_destino"
+							id="cidade_destino"
+							onChange={this.handleChangeCidadeDestino}
+						>
+							<option value="" disabled selected>
+								Destino
+							</option>
+							<option value="sao paulo">São Paulo</option>
+							<option value="rio de janeiro">
+								Rio de Janeiro
+							</option>
+							<option value="curitiba">Curitiba</option>
+							<option value="belo horizonte">
+								Belo Horizonte
+							</option>
+						</Select>
+					</div>
+					<Button onClick={this.handleSubmit}>Pesquisar</Button>
 				</form>
 			</div>
 		);
 	}
 }
-function mapStateToProps({ auth, hotel }) {
-	return { auth, hotel };
+function mapStateToProps({ auth }) {
+	return { auth };
 }
 
-function convert(str) {
-	var date = new Date(str),
-		mnth = ('0' + (date.getMonth() + 1)).slice(-2),
-		day = ('0' + date.getDate()).slice(-2);
-	return [date.getFullYear(), mnth, day].join('-');
+async function getHotels(cidadeDestino) {
+	var res = await axios({
+		method: 'GET',
+		url: 'https://hotels4.p.rapidapi.com/locations/search',
+		headers: {
+			'content-type': 'application/octet-stream',
+			'x-rapidapi-host': 'hotels4.p.rapidapi.com',
+			'x-rapidapi-key':
+				'0bdd73a0bamsh21165a979cefe35p1f8757jsn91ce57cf4a10',
+			useQueryString: true,
+		},
+		params: {
+			locale: 'en_US',
+			query: cidadeDestino,
+		},
+	});
+	return res;
 }
 
 export default connect(mapStateToProps, actions)(Travels);
