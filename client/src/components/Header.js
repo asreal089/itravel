@@ -43,11 +43,12 @@ class Header extends Component {
 						to={this.props.auth ? '/home' : '/'}
 						href="/"
 						className="brand-logo"
+						style={{ width: '20%' }}
 					>
 						Itravel
 					</Link>
 
-					<ul id="nav-mobile" className="right hide-on-med-and-down">
+					<ul id="nav-mobile" className="right">
 						{this.renderContent()}
 					</ul>
 				</div>
