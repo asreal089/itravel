@@ -12,7 +12,11 @@ const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 ReactDOM.render(
 	<Provider store={store}>
+		<link href="./components/assets/css/gijgo.min.css" rel="stylesheet"/>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"/>
 		<App />
+		<script src="./components/assets/js/gijgo.min.js"></script>
+		<script src="./components/assets/js/date-picker.js"></script>
 	</Provider>,
 	document.querySelector('#root')
 );
