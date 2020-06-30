@@ -7,6 +7,7 @@ import { Row } from 'react-materialize';
 import { Col } from 'react-materialize';
 import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
+import { IoIosAddCircleOutline } from 'react-icons/io';
 
 const axios = require('axios');
 
@@ -140,6 +141,12 @@ class TravelsSearch extends Component {
 											<tr>
 												<td>{entidade.type}</td>
 												<td>{entidade.name}</td>
+												<td>
+													<IoIosAddCircleOutline
+														size={22}
+														color="#EEE"
+													/>
+												</td>
 											</tr>
 										))}
 									</tbody>
