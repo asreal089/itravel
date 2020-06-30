@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Select } from 'react-materialize';
 import { Button } from 'react-materialize';
+import { Row } from 'react-materialize';
+import { Col } from 'react-materialize';
+import { Card } from 'react-materialize';
+import { Table } from 'react-materialize';
+
 const axios = require('axios');
 
 class Travels extends Component {
@@ -11,6 +16,7 @@ class Travels extends Component {
 		this.state = {
 			cidade_origem: '',
 			cidade_destino: '',
+			passeios: [],
 		};
 
 		this.handleChangeCidadeOrigem = this.handleChangeCidadeOrigem.bind(
@@ -19,7 +25,12 @@ class Travels extends Component {
 		this.handleChangeCidadeDestino = this.handleChangeCidadeDestino.bind(
 			this
 		);
+		this.handleAPIpasseio = this.handleAPIpasseio.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleAPIpasseio(res) {
+		this.setState({ passeios: res });
 	}
 
 	handleChangeCidadeOrigem(event) {
@@ -39,7 +50,7 @@ class Travels extends Component {
 				this.state.cidade_destino
 		);
 		var res = await getHotels(this.state.cidade_destino);
-		console.log(res.data);
+		this.handleAPIpasseio(res.data.suggestions);
 	}
 
 	componentDidMount() {
@@ -58,7 +69,7 @@ class Travels extends Component {
 							id="cidade_origem"
 							onChange={this.handleChangeCidadeOrigem}
 						>
-							<option value="" disabled selected>
+							<option value="" disabled defaultValue>
 								Origem
 							</option>
 							<option value="sao paulo">São Paulo</option>
@@ -79,7 +90,7 @@ class Travels extends Component {
 							id="cidade_destino"
 							onChange={this.handleChangeCidadeDestino}
 						>
-							<option value="" disabled selected>
+							<option value="" disabled defaultValue>
 								Destino
 							</option>
 							<option value="sao paulo">São Paulo</option>
@@ -92,12 +103,56 @@ class Travels extends Component {
 							</option>
 						</Select>
 					</div>
-					<Button onClick={this.handleSubmit}>Pesquisar</Button>
+					<Button
+						onClick={this.handleSubmit}
+						style={{ backgroundColor: 'purple' }}
+					>
+						Pesquisar
+					</Button>
 				</form>
+
+				{this.state.passeios.length > 0 && (
+					<TravelsSearch passeios={this.state.passeios} />
+				)}
 			</div>
 		);
 	}
 }
+
+class TravelsSearch extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
+		return (
+			<div>
+				{this.props.passeios.map((passeio) => (
+					<Row>
+						<Col m={6} s={12}>
+							<Card
+								className="purple"
+								textClassName="white-text"
+								title={passeio.group}
+							>
+								<Table>
+									<tbody>
+										{passeio.entities.map((entidade) => (
+											<tr>
+												<td>{entidade.type}</td>
+												<td>{entidade.name}</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							</Card>
+						</Col>
+					</Row>
+				))}
+			</div>
+		);
+	}
+}
+
 function mapStateToProps({ auth }) {
 	return { auth };
 }
