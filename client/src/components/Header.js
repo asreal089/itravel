@@ -41,7 +41,7 @@ class Header extends Component {
 				<div className="nav-wrapper">
 					<Link
 						id = "logo"
-						to={this.props.auth ? '/home' : '/'}
+						to={this.props.auth ? '/' : '/'}
 						href="/"
 						className="brand-logo"
 						style={{ width: '20%' }}

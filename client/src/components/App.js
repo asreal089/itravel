@@ -7,7 +7,6 @@ import Travels from './Travels';
 import Lading from './Landing';
 import Home from './Home';
 import Cart from './Cart';
-import $ from 'jquery';
 
 class App extends Component {
 	componentDidMount() {

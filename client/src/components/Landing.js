@@ -5,7 +5,6 @@ import Londres from './assets/londres.jpg';
 import Florenca from './assets/florenca.jpg';
 import Paris from './assets/paris.jpg';
 import './assets/css/style.css';
-// import './assets/css/gijgo.min.css';
 
 class Landing extends Component {
 	componentDidMount() {

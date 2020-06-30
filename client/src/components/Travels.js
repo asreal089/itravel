@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Select } from 'react-materialize';
 import { Button } from 'react-materialize';
+import DatePicker from 'react-date-picker';
+
 const axios = require('axios');
 
 class Travels extends Component {
@@ -50,9 +53,9 @@ class Travels extends Component {
 	render() {
 		return (
 			<div style={{}}>
-				<form>
-					<div style={{ width: '45%', float: 'left' }}>
-						<p>Escolha cidade de Origem</p>
+				<form id="pesquisa-voos">
+					<div id="origem">
+						<p>Origem:</p>
 						<Select
 							name="cidade_origem"
 							id="cidade_origem"
@@ -69,11 +72,16 @@ class Travels extends Component {
 							<option value="belo horizonte">
 								Belo Horizonte
 							</option>
-						</Select>
+						</Select>  
+						<DatePicker
+							className ="data-ida"
+							onChange = {
+
+							}
+						/>
 					</div>
-					<div style={{ width: '10%' }} />
-					<div style={{ width: '45%', float: 'right' }}>
-						<p>Escolha seu destino</p>
+					<div id="destino">
+						<p>Destino:</p>
 						<Select
 							name="cidade_destino"
 							id="cidade_destino"
@@ -91,6 +99,12 @@ class Travels extends Component {
 								Belo Horizonte
 							</option>
 						</Select>
+						<DatePicker
+							className ="data-volta"
+							onChange = {
+
+							}
+						/>
 					</div>
 					<Button onClick={this.handleSubmit}>Pesquisar</Button>
 				</form>
@@ -103,6 +117,25 @@ function mapStateToProps({ auth }) {
 }
 
 async function getHotels(cidadeDestino) {
+	var res = await axios({
+		method: 'GET',
+		url: 'https://hotels4.p.rapidapi.com/locations/search',
+		headers: {
+			'content-type': 'application/octet-stream',
+			'x-rapidapi-host': 'hotels4.p.rapidapi.com',
+			'x-rapidapi-key':
+				'0bdd73a0bamsh21165a979cefe35p1f8757jsn91ce57cf4a10',
+			useQueryString: true,
+		},
+		params: {
+			locale: 'en_US',
+			query: cidadeDestino,
+		},
+	});
+	return res;
+}
+
+async function getVoos(cidadeDestino) {
 	var res = await axios({
 		method: 'GET',
 		url: 'https://hotels4.p.rapidapi.com/locations/search',

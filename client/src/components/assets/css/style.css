@@ -19,3 +19,11 @@ body {
 #logo {
     margin-left: 20px;
 }
+
+#pesquisa-voos div {
+    display: inline-block;
+}
+
+#pesquisa-voos #origem, #destino, .input-field{
+    margin-right: 20px;
+}
