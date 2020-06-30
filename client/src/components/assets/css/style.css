@@ -1,0 +1,21 @@
+body {
+    background-color:;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.carousel{
+    height: 550px!important;
+}
+
+#header {
+    width: 100%;
+}
+
+#logo {
+    margin-left: 20px;
+}
