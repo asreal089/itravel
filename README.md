@@ -13,3 +13,5 @@ Para executar local
 ```
 npm run dev
 ```
+
+Executar os comandos no diretório principal e client.
