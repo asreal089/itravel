@@ -63,46 +63,64 @@ class Travels extends Component {
 		return (
 			<div style={{}}>
 				<form>
-					<div style={{ width: '45%', float: 'left' }}>
-						<p>Escolha cidade de Origem</p>
-						<Select
-							name="cidade_origem"
-							id="cidade_origem"
-							onChange={this.handleChangeCidadeOrigem}
+					<div
+						style={{
+							width: '100%',
+						}}
+					>
+						<div
+							style={{
+								width: '50%',
+								float: 'left',
+								paddingRight: '10px',
+							}}
 						>
-							<option value="" disabled defaultValue>
-								Origem
-							</option>
-							<option value="sao paulo">São Paulo</option>
-							<option value="rio de janeiro">
-								Rio de Janeiro
-							</option>
-							<option value="curitiba">Curitiba</option>
-							<option value="belo horizonte">
-								Belo Horizonte
-							</option>
-						</Select>
-					</div>
-					<div style={{ width: '10%' }} />
-					<div style={{ width: '45%', float: 'right' }}>
-						<p>Escolha seu destino</p>
-						<Select
-							name="cidade_destino"
-							id="cidade_destino"
-							onChange={this.handleChangeCidadeDestino}
+							<p>Escolha cidade de Origem</p>
+							<Select
+								name="cidade_origem"
+								id="cidade_origem"
+								onChange={this.handleChangeCidadeOrigem}
+							>
+								<option value="" disabled defaultValue>
+									Origem
+								</option>
+								<option value="sao paulo">São Paulo</option>
+								<option value="rio de janeiro">
+									Rio de Janeiro
+								</option>
+								<option value="curitiba">Curitiba</option>
+								<option value="belo horizonte">
+									Belo Horizonte
+								</option>
+							</Select>
+						</div>
+
+						<div
+							style={{
+								width: '50%',
+								float: 'right',
+								paddingLeft: '10px',
+							}}
 						>
-							<option value="" disabled defaultValue>
-								Destino
-							</option>
-							<option value="sao paulo">São Paulo</option>
-							<option value="rio de janeiro">
-								Rio de Janeiro
-							</option>
-							<option value="curitiba">Curitiba</option>
-							<option value="belo horizonte">
-								Belo Horizonte
-							</option>
-						</Select>
+							<p>Escolha seu destino</p>
+							<Select
+								name="cidade_destino"
+								id="cidade_destino"
+								onChange={this.handleChangeCidadeDestino}
+							>
+								<option value="" disabled defaultValue>
+									Destino
+								</option>
+								<option value="sao paulo">São Paulo</option>
+								<option value="rio de janeiro">
+									Rio de Janeiro
+								</option>
+								<option value="curitiba">Curitiba</option>
+								<option value="belo horizonte">
+									Belo Horizonte
+								</option>
+							</Select>
+						</div>
 					</div>
 					<Button
 						onClick={this.handleSubmit}
@@ -121,9 +139,6 @@ class Travels extends Component {
 }
 
 class TravelsSearch extends Component {
-	constructor(props) {
-		super(props);
-	}
 	render() {
 		return (
 			<div>
