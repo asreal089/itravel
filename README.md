@@ -14,4 +14,4 @@ Para executar local
 npm run dev
 ```
 
-Executar os comandos no diretório principal e client.
+Executar o comando npm install no diretório principal e client.
