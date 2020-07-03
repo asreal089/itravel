@@ -4,6 +4,11 @@ import * as actions from '../actions';
 import { Select } from 'react-materialize';
 import { Button } from 'react-materialize';
 import formatDate from './FormatDate';
+import { Row } from 'react-materialize';
+import { Col } from 'react-materialize';
+import { Card } from 'react-materialize';
+import { Table } from 'react-materialize';
+import { IoIosAddCircleOutline } from 'react-icons/io';
 
 /** novo datepicker */
 import DatePicker from "react-datepicker";
@@ -47,6 +52,10 @@ class Travels extends Component {
 		value: new Date(),
 	}	
 	
+	handleAPIpasseio(res) {
+		this.setState({ passeios: res });
+	}
+
 	handleChangeCidadeOrigem(event) {
 		this.setState({ cidade_origem: event.target.value });
 	}
@@ -162,13 +171,53 @@ class Travels extends Component {
 					<Button onClick={this.handleSubmit}>Pesquisar</Button>
 				</form>
 				<div id="resulta-pesquisa">
-				
+				{/* {this.state.passeios.length > 0 && (
+					<TravelsSearch passeios={this.state.passeios} />
+				)} */}
 				</div>
 			</div>
 
 		);
 	}
 }
+
+class TravelsSearch extends Component {
+	render() {
+		return (
+			<div>
+				{this.props.passeios.map((passeio) => (
+					<Row>
+						<Col m={6} s={12}>
+							<Card
+								className="purple"
+								textClassName="white-text"
+								title={passeio.group}
+							>
+								<Table>
+									<tbody>
+										{passeio.entities.map((entidade) => (
+											<tr>
+												<td>{entidade.type}</td>
+												<td>{entidade.name}</td>
+												<td>
+													<IoIosAddCircleOutline
+														size={22}
+														color="#EEE"
+													/>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							</Card>
+						</Col>
+					</Row>
+				))}
+			</div>
+		);
+	}
+}
+
 function mapStateToProps({ auth }) {
 	return { auth };
 }
