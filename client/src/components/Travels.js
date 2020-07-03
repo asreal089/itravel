@@ -10,12 +10,14 @@ import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 
+
 /** novo datepicker */
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import pt from 'date-fns/locale/pt';
 registerLocale('pt', pt)
+
 
 const axios = require('axios');
 const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -28,6 +30,7 @@ class Travels extends Component {
 			cidade_destino: '',
 			data_ida: '',
 			data_volta: ''
+
 		};
 
 		this.handleChangeCidadeOrigem = this.handleChangeCidadeOrigem.bind(
@@ -51,7 +54,11 @@ class Travels extends Component {
 	state = {
 		value: new Date(),
 	}	
-	
+
+		this.handleAPIpasseio = this.handleAPIpasseio.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	handleAPIpasseio(res) {
 		this.setState({ passeios: res });
 	}
@@ -89,6 +96,7 @@ class Travels extends Component {
 		var res = await getVoos(this.state.cidade_origem, this.state.cidade_destino, this.state.data_ida, this.state.data_volta);
 		console.log(res.data);
 		// showResults(res2.data);
+
 	}
 
 	componentDidMount() {
@@ -168,14 +176,21 @@ class Travels extends Component {
 							/>
 
 					</div>
-					<Button onClick={this.handleSubmit}>Pesquisar</Button>
+					<Button
+						onClick={this.handleSubmit}
+						style={{ backgroundColor: 'purple' }}
+					>
+						Pesquisar
+					</Button>
 				</form>
+
 				<div id="resulta-pesquisa">
 				{/* {this.state.passeios.length > 0 && (
 					<TravelsSearch passeios={this.state.passeios} />
 				)} */}
 				</div>
 			</div>
+
 
 		);
 	}
