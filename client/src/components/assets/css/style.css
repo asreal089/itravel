@@ -20,10 +20,14 @@ body {
     margin-left: 20px;
 }
 
-#pesquisa-voos div {
+#pesquisa-voos  {
     display: inline-block;
 }
 
 #pesquisa-voos #origem, #destino, .input-field{
     margin-right: 20px;
+}
+
+#origem, #destino, .input-field{
+    display: inline-block;
 }

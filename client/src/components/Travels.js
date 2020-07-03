@@ -3,8 +3,14 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Select } from 'react-materialize';
 import { Button } from 'react-materialize';
-import DatePicker from 'react-date-picker';
 import formatDate from './FormatDate';
+
+/** novo datepicker */
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import pt from 'date-fns/locale/pt';
+registerLocale('pt', pt)
 
 const axios = require('axios');
 const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -40,10 +46,6 @@ class Travels extends Component {
 	state = {
 		value: new Date(),
 	}	
-
-	onChangeIda = valueIda => this.setState({ data_ida: valueIda });
-
-	onChangeVolta = valueVolta => this.setState({ data_volta: valueVolta });
 	
 	handleChangeCidadeOrigem(event) {
 		this.setState({ cidade_origem: event.target.value });
@@ -53,18 +55,18 @@ class Travels extends Component {
 		this.setState({ cidade_destino: event.target.value });
 	}
 
-	handleChangeDataIda(event){
-		this.setState({ data_ida: event.target.value });
+	handleChangeDataIda(date){
+		this.setState({ startDate: date });
 	}
 	
-	handleChangeDataVolta(event){
-
+	handleChangeDataVolta(date){
+		this.setState({ endDate: date });
 	}
 	  
 	async handleSubmit(event) {
 		event.preventDefault();
-		this.state.data_ida = formatDate(this.state.data_ida);
-		this.state.data_volta = formatDate(this.state.data_volta);
+		this.state.data_ida = formatDate(this.state.startDate);
+		this.state.data_volta = formatDate(this.state.endDate);
 		alert(
 			'cidade origem: ' +
 				this.state.cidade_origem +
@@ -85,9 +87,20 @@ class Travels extends Component {
 			this.props.history.push(`/`);
 		}
 	}
+
+	state = {
+		startDate: new Date(),
+		endDate: new Date()
+	  };
+	 
+	handleChange = date => {
+		this.setState({
+		  date
+		});
+	};
+	
 	render() {
-		const { valueIda } = this.state;
-		const { valueVolta } = this.state;
+
 		return (
 			<div style={{}}>
 				<form id="pesquisa-voos">
@@ -111,11 +124,13 @@ class Travels extends Component {
 							</option>
 						</Select>  
 						<DatePicker
-							className ="data-ida"
-							format = "yyyy-MM-dd"
-							onChange={this.onChangeIda}
-							value={valueIda}
-						/>
+							selected={this.state.startDate}
+							dateFormat="dd/MM/yyyy"
+							onChange={this.handleChangeDataIda}
+							locale="pt"
+							/>
+							
+							
 					</div>
 					<div id="destino">
 						<p>Destino:</p>
@@ -137,11 +152,12 @@ class Travels extends Component {
 							</option>
 						</Select>
 						<DatePicker
-							className ="data-volta"
-							format = "yyyy-MM-dd"
-							onChange = {this.onChangeVolta}
-							value={valueVolta}
-						/>
+							selected={this.state.endDate}
+							dateFormat="dd/MM/yyyy"
+							onChange={this.handleChangeDataVolta}
+							locale="pt"
+							/>
+
 					</div>
 					<Button onClick={this.handleSubmit}>Pesquisar</Button>
 				</form>
