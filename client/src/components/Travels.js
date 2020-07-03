@@ -10,14 +10,12 @@ import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 
-
 /** novo datepicker */
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
 import pt from 'date-fns/locale/pt';
-registerLocale('pt', pt)
-
+registerLocale('pt', pt);
 
 const axios = require('axios');
 const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -29,8 +27,7 @@ class Travels extends Component {
 			cidade_origem: '',
 			cidade_destino: '',
 			data_ida: '',
-			data_volta: ''
-
+			data_volta: '',
 		};
 
 		this.handleChangeCidadeOrigem = this.handleChangeCidadeOrigem.bind(
@@ -41,23 +38,18 @@ class Travels extends Component {
 			this
 		);
 
-		this.handleChangeDataIda = this.handleChangeDataIda.bind(
-			this
-		);
+		this.handleChangeDataIda = this.handleChangeDataIda.bind(this);
 
-		this.handleChangeDataVolta = this.handleChangeDataVolta.bind(
-			this
-		);
+		this.handleChangeDataVolta = this.handleChangeDataVolta.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.handleAPIpasseio = this.handleAPIpasseio.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	state = {
 		value: new Date(),
-	}	
-
-		this.handleAPIpasseio = this.handleAPIpasseio.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+	};
 
 	handleAPIpasseio(res) {
 		this.setState({ passeios: res });
@@ -71,14 +63,14 @@ class Travels extends Component {
 		this.setState({ cidade_destino: event.target.value });
 	}
 
-	handleChangeDataIda(date){
+	handleChangeDataIda(date) {
 		this.setState({ startDate: date });
 	}
-	
-	handleChangeDataVolta(date){
+
+	handleChangeDataVolta(date) {
 		this.setState({ endDate: date });
 	}
-	  
+
 	async handleSubmit(event) {
 		event.preventDefault();
 		this.state.data_ida = formatDate(this.state.startDate);
@@ -93,10 +85,14 @@ class Travels extends Component {
 				'\n data volta:' +
 				this.state.data_volta
 		);
-		var res = await getVoos(this.state.cidade_origem, this.state.cidade_destino, this.state.data_ida, this.state.data_volta);
+		var res = await getVoos(
+			this.state.cidade_origem,
+			this.state.cidade_destino,
+			this.state.data_ida,
+			this.state.data_volta
+		);
 		console.log(res.data);
 		// showResults(res2.data);
-
 	}
 
 	componentDidMount() {
@@ -107,17 +103,16 @@ class Travels extends Component {
 
 	state = {
 		startDate: new Date(),
-		endDate: new Date()
-	  };
-	 
-	handleChange = date => {
+		endDate: new Date(),
+	};
+
+	handleChange = (date) => {
 		this.setState({
-		  date
+			date,
 		});
 	};
-	
-	render() {
 
+	render() {
 		return (
 			<div style={{}}>
 				<form id="pesquisa-voos">
@@ -132,22 +127,16 @@ class Travels extends Component {
 								Origem
 							</option>
 							<option value="SAO">São Paulo</option>
-							<option value="RIO">
-								Rio de Janeiro
-							</option>
+							<option value="RIO">Rio de Janeiro</option>
 							<option value="CWB">Curitiba</option>
-							<option value="CNF">
-								Belo Horizonte
-							</option>
-						</Select>  
+							<option value="CNF">Belo Horizonte</option>
+						</Select>
 						<DatePicker
 							selected={this.state.startDate}
 							dateFormat="dd/MM/yyyy"
 							onChange={this.handleChangeDataIda}
 							locale="pt"
-							/>
-							
-							
+						/>
 					</div>
 					<div id="destino">
 						<p>Destino:</p>
@@ -160,21 +149,16 @@ class Travels extends Component {
 								Destino
 							</option>
 							<option value="SAO">São Paulo</option>
-							<option value="RIO">
-								Rio de Janeiro
-							</option>
+							<option value="RIO">Rio de Janeiro</option>
 							<option value="CWB">Curitiba</option>
-							<option value="CNF">
-								Belo Horizonte
-							</option>
+							<option value="CNF">Belo Horizonte</option>
 						</Select>
 						<DatePicker
 							selected={this.state.endDate}
 							dateFormat="dd/MM/yyyy"
 							onChange={this.handleChangeDataVolta}
 							locale="pt"
-							/>
-
+						/>
 					</div>
 					<Button
 						onClick={this.handleSubmit}
@@ -185,13 +169,11 @@ class Travels extends Component {
 				</form>
 
 				<div id="resulta-pesquisa">
-				{/* {this.state.passeios.length > 0 && (
+					{/* {this.state.passeios.length > 0 && (
 					<TravelsSearch passeios={this.state.passeios} />
 				)} */}
 				</div>
 			</div>
-
-
 		);
 	}
 }
@@ -257,16 +239,19 @@ async function getHotels(cidadeDestino) {
 }
 
 async function getVoos(cidadeOrigem, cidadeDestino, dataIda, dataVolta) {
-	if(dataVolta == "NaN-NaN-NaN"){
-		var flights =  await axios({
+	if (dataVolta == 'NaN-NaN-NaN') {
+		var flights = await axios({
 			method: 'GET',
-			url: 'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
-			
+			url:
+				'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
+
 			headers: {
-				"x-access-token": "15a20173bc9561f1d4f8c7f7ee9f34c4",
-				"x-rapidapi-host": "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-				"x-rapidapi-key": "e0d994b5bbmshb989d25e9770787p1f57fbjsn3be918fcdf61",
-				"useQueryString": true
+				'x-access-token': '15a20173bc9561f1d4f8c7f7ee9f34c4',
+				'x-rapidapi-host':
+					'travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com',
+				'x-rapidapi-key':
+					'e0d994b5bbmshb989d25e9770787p1f57fbjsn3be918fcdf61',
+				useQueryString: true,
 			},
 
 			params: {
@@ -274,19 +259,22 @@ async function getVoos(cidadeOrigem, cidadeDestino, dataIda, dataVolta) {
 				destination: cidadeDestino,
 				depart_date: dataIda,
 				page: 'None',
-				currency: 'BRL'
-			}
-		})
+				currency: 'BRL',
+			},
+		});
 	} else {
-		var flights =  await axios({
+		var flights = await axios({
 			method: 'GET',
-			url: 'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
-			
+			url:
+				'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
+
 			headers: {
-				"x-access-token": "15a20173bc9561f1d4f8c7f7ee9f34c4",
-				"x-rapidapi-host": "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-				"x-rapidapi-key": "e0d994b5bbmshb989d25e9770787p1f57fbjsn3be918fcdf61",
-				"useQueryString": true
+				'x-access-token': '15a20173bc9561f1d4f8c7f7ee9f34c4',
+				'x-rapidapi-host':
+					'travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com',
+				'x-rapidapi-key':
+					'e0d994b5bbmshb989d25e9770787p1f57fbjsn3be918fcdf61',
+				useQueryString: true,
 			},
 
 			params: {
@@ -295,9 +283,9 @@ async function getVoos(cidadeOrigem, cidadeDestino, dataIda, dataVolta) {
 				depart_date: dataIda,
 				return_date: dataVolta,
 				page: 'None',
-				currency: 'BRL'
-			}
-		})
+				currency: 'BRL',
+			},
+		});
 	}
 
 	return flights;
