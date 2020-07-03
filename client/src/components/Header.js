@@ -37,15 +37,16 @@ class Header extends Component {
 
 	render() {
 		return (
-			<nav style={{ backgroundColor: 'purple' }}>
+			<nav id="header" style={{ backgroundColor: 'purple' }}>
 				<div className="nav-wrapper">
 					<Link
-						to={this.props.auth ? '/home' : '/'}
+						id = "logo"
+						to={this.props.auth ? '/' : '/'}
 						href="/"
 						className="brand-logo"
 						style={{ width: '20%' }}
 					>
-						Itravel
+						ITravel
 					</Link>
 
 					<ul id="nav-mobile" className="right">

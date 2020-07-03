@@ -12,7 +12,9 @@ const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 ReactDOM.render(
 	<Provider store={store}>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"/>
+
 		<App />
-	</Provider>,
+		</Provider>,
 	document.querySelector('#root')
 );
