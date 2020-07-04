@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Header from './Header';
 import Travels from './Travels';
+import FlightSearches from './FlightSearches';
 import Lading from './Landing';
 import Home from './Home';
 import Cart from './Cart';
@@ -27,6 +28,8 @@ class App extends Component {
 							path="/travels"
 							component={Travels}
 						/>
+						<Route exact={true} path="/flightsearches" component={FlightSearches} />
+
 					</div>
 				</BrowserRouter>
 			</div>

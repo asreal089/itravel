@@ -9,6 +9,7 @@ import { Col } from 'react-materialize';
 import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
 import { IoIosAddCircleOutline } from 'react-icons/io';
+import JSONtoArray from './JSONtoArray';
 
 /** novo datepicker */
 import DatePicker from "react-datepicker";
@@ -27,7 +28,9 @@ class Travels extends Component {
 			cidade_origem: '',
 			cidade_destino: '',
 			data_ida: '',
-			data_volta: ''
+			data_volta: '',
+			teste: '',
+			flights: []
 		};
 
 		this.handleChangeCidadeOrigem = this.handleChangeCidadeOrigem.bind(
@@ -45,15 +48,24 @@ class Travels extends Component {
 		this.handleChangeDataVolta = this.handleChangeDataVolta.bind(
 			this
 		);
+
+		this.handleChangeTeste = this.handleChangeTeste.bind(
+			this
+		);
+
+		this.handleChangeFlights = this.handleChangeFlights.bind(
+			this
+		);
+
+		this.handleAPIpasseio = this.handleAPIpasseio.bind(
+			this
+		);
+
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	state = {
-		value: new Date(),
-	}	
-	
 	handleAPIpasseio(res) {
-		this.setState({ passeios: res });
+		this.setState({ flights: Array.from(res) });
 	}
 
 	handleChangeCidadeOrigem(event) {
@@ -71,11 +83,25 @@ class Travels extends Component {
 	handleChangeDataVolta(date){
 		this.setState({ endDate: date });
 	}
+
+	handleChangeTeste(valor){
+		this.setState({ teste: valor });
+	}
 	  
+	handleChangeFlights(res){
+		this.setState({ flights: Array.from(res.data) });
+	}
+
 	async handleSubmit(event) {
 		event.preventDefault();
 		this.state.data_ida = formatDate(this.state.startDate);
 		this.state.data_volta = formatDate(this.state.endDate);
+		var res = await getVoos(this.state.cidade_origem, this.state.cidade_destino, this.state.data_ida, this.state.data_volta);
+
+		console.log(res.data);
+
+		this.state.teste = 'kkk';
+		this.state.flights = res.data;
 		alert(
 			'cidade origem: ' +
 				this.state.cidade_origem +
@@ -84,10 +110,21 @@ class Travels extends Component {
 				'\n data ida:' +
 				this.state.data_ida +
 				'\n data volta:' +
-				this.state.data_volta
+				this.state.data_volta +
+				this.state.teste
 		);
-		var res = await getVoos(this.state.cidade_origem, this.state.cidade_destino, this.state.data_ida, this.state.data_volta);
-		console.log(res.data);
+		this.props.history.push({ //browserHistory.push should also work here
+			pathname: '/flightsearches',
+			state: {
+				cidade_origem: this.state.cidade_origem,
+				cidade_destino: this.state.cidade_destino,
+				data_ida: this.state.data_ida,
+				data_volta: this.state.data_volta,
+				teste: this.state.teste,
+				flights: this.state.flights
+			}
+		  }); 
+		
 		// showResults(res2.data);
 	}
 
@@ -107,6 +144,7 @@ class Travels extends Component {
 		  date
 		});
 	};
+	
 	
 	render() {
 
@@ -171,12 +209,31 @@ class Travels extends Component {
 					<Button onClick={this.handleSubmit}>Pesquisar</Button>
 				</form>
 				<div id="resulta-pesquisa">
-				{/* {this.state.passeios.length > 0 && (
-					<TravelsSearch passeios={this.state.passeios} />
-				)} */}
+			<TravelsSearch passeios={this.state.flights}></TravelsSearch>
 				</div>
 			</div>
 
+		);
+	}
+}
+
+class FlightSearches extends Component {
+	render() {
+		return (
+			<div>
+				<h1>Hello</h1>
+				<ul>
+            {this.props.flights.map(entries => (
+                <li>
+                    <ul>
+                        {entries.map(entry => (
+                            <li>{entry}</li>
+                        ))}
+                    </ul>
+                </li>
+            ))}
+        </ul>
+			</div>
 		);
 	}
 }
@@ -242,11 +299,12 @@ async function getHotels(cidadeDestino) {
 }
 
 async function getVoos(cidadeOrigem, cidadeDestino, dataIda, dataVolta) {
+	var voos = [];
 	if(dataVolta == "NaN-NaN-NaN"){
 		var flights =  await axios({
 			method: 'GET',
 			url: 'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
-			
+			responseType: 'json',
 			headers: {
 				"x-access-token": "15a20173bc9561f1d4f8c7f7ee9f34c4",
 				"x-rapidapi-host": "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
@@ -266,14 +324,13 @@ async function getVoos(cidadeOrigem, cidadeDestino, dataIda, dataVolta) {
 		var flights =  await axios({
 			method: 'GET',
 			url: 'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
-			
+			responseType: 'json',
 			headers: {
 				"x-access-token": "15a20173bc9561f1d4f8c7f7ee9f34c4",
 				"x-rapidapi-host": "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
 				"x-rapidapi-key": "e0d994b5bbmshb989d25e9770787p1f57fbjsn3be918fcdf61",
 				"useQueryString": true
 			},
-
 			params: {
 				origin: cidadeOrigem,
 				destination: cidadeDestino,
