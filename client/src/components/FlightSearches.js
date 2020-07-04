@@ -34,19 +34,8 @@ class FlightSearches extends Component {
                 {console.log("tipo desse caray2: " + typeof this.state.flights )}
                 {console.log(this.props.location.state.flights)}
 
-                {this.props.location.state.flights.map((data, key) => {
-                    <div key={key}>
-                    {data.company +
-                        " , " +
-                        data.ticker +
-                        " ," +
-                        data.stockPrice +
-                        ", " +
-                        data.timeElapsed}
-                    </div>
-                })}
+                <p>{JSON.stringify(this.props.location.state.flights.data.RIO)}</p>
 
-            </ul>
 			</div>
 		);
 	}
