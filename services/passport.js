@@ -32,7 +32,7 @@ passport.use(
 				googleId: profile.id,
 				nome: profile._json.name,
 				email: profile._json.email,
-			});
+			}).save();
 			return done(null, user);
 		}
 	)
