@@ -5,12 +5,35 @@ import { Col } from 'react-materialize';
 import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
 
+const axios = require('axios');
+
 class Cart extends Component {
 	componentDidMount() {
 		if (!this.props.auth) {
 			this.props.history.push(`/`);
 		}
+
+		this.state = {
+			hotel: {
+				hotel_name: 'ibs',
+				data_checkin: '20-02-2020',
+				data_checkout: '20-03-2020',
+				qtd_pessoas: '4',
+				user: this.props.auth.id,
+			},
+			flight: {
+				qtd_pessoas: '4',
+				origem: 'SAO',
+				destino: 'Curitiba',
+				data_ida: '20-02-2020',
+				hora_saida: '20-03-2020',
+			},
+		};
+
+		//var saveHotel = saveHotelState();
+		//console.log(saveHotel);
 	}
+
 	render() {
 		return (
 			<div>
@@ -62,6 +85,15 @@ class Cart extends Component {
 }
 function mapStateToProps({ auth }) {
 	return { auth };
+}
+
+async function saveHotelState() {
+	var res = await axios({
+		method: 'POST',
+		url: '/hotel',
+		data: this.state.hotel,
+	});
+	return res;
 }
 
 export default connect(mapStateToProps)(Cart);

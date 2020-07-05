@@ -7,8 +7,15 @@ require('./models/user');
 require('./models/flight');
 require('./models/hotel');
 require('./services/passport');
+const cors = require('cors');
 
 const app = express();
+app.use(
+	cors({
+		methods: ['GET', 'POST'],
+		credentials: true,
+	})
+);
 
 app.use(cookieSession({ maxAge: 30 * 24 * 60 * 1000, keys: [keys.cookieKey] }));
 app.use(passport.initialize());

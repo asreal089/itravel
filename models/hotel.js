@@ -6,7 +6,7 @@ const hotelSchema = new Schema({
 	data_checkin: String,
 	data_checkout: String,
 	qtd_pessoas: String,
-	user: { type: Schema.Types.ObjectId, ref: 'User' },
+	user: { type: Schema.Types.ObjectId, ref: 'user' },
 });
 
 mongoose.model('hotel', hotelSchema);

@@ -4,12 +4,15 @@ import { Row } from 'react-materialize';
 import { Col } from 'react-materialize';
 import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
+const axios = require('axios');
 
 class Home extends Component {
 	componentDidMount() {
-		if (!this.props.auth) {
+		/*if (!this.props.auth) {
 			this.props.history.push(`/`);
-		}
+		}*/
+		var hotelState = getHotelState();
+		console.log(hotelState);
 	}
 
 	render() {
@@ -59,6 +62,25 @@ class Home extends Component {
 }
 function mapStateToProps({ auth }) {
 	return { auth };
+}
+
+async function getHotelState() {
+	var res = await axios.get('/api/hotel');
+	return res;
+}
+
+async function saveHotelState() {
+	var res = await axios({
+		method: 'post',
+		url: '/api/hotel',
+		data: {
+			hotel_name: 'canabrava',
+			data_checkin: '02-12-2021',
+			data_checkout: '15-01-2022',
+			qtd_pessoas: '3',
+		},
+	});
+	return res;
 }
 
 export default connect(mapStateToProps)(Home);

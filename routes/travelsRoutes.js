@@ -1,11 +1,13 @@
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewere/requireLogin');
-const { json } = require('express');
-
+const { json, response } = require('express');
 const Hotel = mongoose.model('hotel');
 const Flight = mongoose.model('flight');
+
 module.exports = (app) => {
-	app.post('/hotel', requireLogin, (req, res) => {
+	app.use(bodyParser.json());
+	app.post('/api/hotel', requireLogin, (req, res) => {
 		const {
 			hotel_name,
 			data_checkin,
@@ -18,11 +20,11 @@ module.exports = (app) => {
 			data_checkin,
 			data_checkout,
 			qtd_pessoas,
-			_user: req.user.id,
-		});
+			user: req.user.id,
+		}).save();
 	});
 
-	app.post('/flight', requireLogin, (req, res) => {
+	app.post('/api/flight', requireLogin, (req, res) => {
 		const { qtd_pessoas, origem, destino, data_ida, hora_saida } = req.body;
 
 		const flight = new Flight({
@@ -31,18 +33,21 @@ module.exports = (app) => {
 			destino,
 			data_ida,
 			hora_saida,
-			_user: req.user.id,
+			user: req.user.id,
+		}).save();
+	});
+
+	app.get('/api/hotel', requireLogin, (req, res) => {
+		console.log('chega aqui');
+		var hotelState = Hotel.find({
+			user: req.user.id,
 		});
+		response = JSON.stringify(hotelState);
+		res.send(response);
 	});
 
-	app.get('/hotel', requireLogin, (req, res) => {
-		const hotel = Hotel.find({ _user: req.user.id });
-		console.log(hotel);
-		res.send(hotel);
-	});
-
-	app.get('/flight', requireLogin, (req, res) => {
-		const flight = Flight.find({ _user: req.user.id });
+	app.get('/api/flight', requireLogin, (req, res) => {
+		const flight = Flight.findOne({ user: req.user.id });
 		console.log(hotel);
 		res.send(flight);
 	});
