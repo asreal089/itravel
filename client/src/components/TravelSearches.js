@@ -63,9 +63,9 @@ class TravelSearches extends Component {
 
                                                 { 
                                                     suggestions.entities.map((entities) =>
-                                                    <tr width="100">
-                                                        <td width="25%">{entities.name}</td>
-                                                        <td width="70%">{entities.caption}</td>
+                                                    <tr>
+                                                        <td width="200px">{entities.name}</td>
+                                                        <td width="550px">{entities.caption}</td>
                                                         <td width="5%">
                                                         <IoIosAddCircleOutline
                                                             size={22}
