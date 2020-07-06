@@ -44,40 +44,47 @@ class TravelSearches extends Component {
 				)}
 				<div>
 					{this.props.location.state.hotels.suggestions.map(
-						(passeio) => (
-							<Row>
-								<Col m={6} s={12}>
-									<Card
-										className="purple"
-										textClassName="white-text"
-										title={passeio.group}
-									>
-										<Table>
-											<tbody>
-												{passeio.entities.map(
-													(entidade) => (
-														<tr>
-															<td>
-																{entidade.type}
-															</td>
-															<td>
-																{entidade.name}
-															</td>
-															<td>
-																<IoIosAddCircleOutline
-																	size={22}
-																	color="#EEE"
-																/>
-															</td>
-														</tr>
-													)
-												)}
-											</tbody>
-										</Table>
-									</Card>
-								</Col>
-							</Row>
-						)
+						(passeio) =>
+							passeio.entities.length > 0 && (
+								<Row>
+									<Col m={6} s={12}>
+										<Card
+											className="purple"
+											textClassName="white-text"
+											title={passeio.group}
+										>
+											<Table>
+												<tbody>
+													{passeio.entities.map(
+														(entidade) => (
+															<tr>
+																<td>
+																	{
+																		entidade.type
+																	}
+																</td>
+																<td>
+																	{
+																		entidade.name
+																	}
+																</td>
+																<td>
+																	<IoIosAddCircleOutline
+																		size={
+																			22
+																		}
+																		color="#EEE"
+																	/>
+																</td>
+															</tr>
+														)
+													)}
+												</tbody>
+											</Table>
+										</Card>
+									</Col>
+								</Row>
+							)
 					)}
 				</div>
 			</div>
