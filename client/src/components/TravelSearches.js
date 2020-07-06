@@ -41,7 +41,7 @@ class TravelSearches extends Component {
                 {console.log("tipo desse caray:" + typeof this.props.location.state.flights )}
                 {console.log("tipo desse caray2: " + typeof this.props.location.state.hotels )}
 
-					<Row>
+					{/* <Row>
 						<Col m={6} s={12}>
 							<Card
 								// className="purple"
@@ -66,7 +66,7 @@ class TravelSearches extends Component {
 								</Table>
 							</Card>
 						</Col>
-					</Row>
+					</Row> */}
 			</div>
 		);
 	}
