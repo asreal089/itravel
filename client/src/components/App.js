@@ -7,6 +7,7 @@ import Travels from './Travels';
 import Lading from './Landing';
 import Home from './Home';
 import Cart from './Cart';
+import TravelSearches from './TravelSearches';
 
 class App extends Component {
 	componentDidMount() {
@@ -27,6 +28,7 @@ class App extends Component {
 							path="/travels"
 							component={Travels}
 						/>
+						<Route exact={true} path="/travelsearches" component={TravelSearches} />
 					</div>
 				</BrowserRouter>
 			</div>
