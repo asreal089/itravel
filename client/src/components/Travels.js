@@ -98,6 +98,20 @@ class Travels extends Component {
 		console.log(res.data);
 		console.log(hotel.data);
 		
+
+		this.props.history.push({ // redireciona para travelsearches
+			pathname: '/travelsearches',
+			state: {
+				cidade_origem: this.state.cidade_origem,
+				cidade_destino: this.state.cidade_destino,
+				data_ida: this.state.data_ida,
+				data_volta: this.state.data_volta,
+				teste: this.state.teste,
+				flights: res.data,
+				hotels: hotel.data
+			}
+		  }); 
+
 		// showResults(res2.data);
 	}
 
