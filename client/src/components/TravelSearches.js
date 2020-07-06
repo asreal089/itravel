@@ -6,7 +6,7 @@ import { Col } from 'react-materialize';
 import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-
+import JSONtoArray from './JSONtoArray';
 const axios = require('axios');
 
 class TravelSearches extends Component {
@@ -41,16 +41,20 @@ class TravelSearches extends Component {
                 {console.log("tipo desse caray:" + typeof this.props.location.state.flights )}
                 {console.log("tipo desse caray2: " + typeof this.props.location.state.hotels )}
 
+                {this.state.flights = JSONtoArray(this.props.location.state.flights)}
+                {/* {this.state.hotels = JSONtoArray(this.props.location.state.hotels)}
+                {console.log(this.state.hotels)} */}
+
 					{/* <Row>
 						<Col m={6} s={12}>
 							<Card
 								// className="purple"
 								// textClassName="white-text"
-								// title={this.props.location.state.hotels.term}
+								// title={this.state.hotels.term}
 							>
 								<Table>
 									 <tbody>
-										{this.props.location.state.hotel.suggestions.map((entidade) => (
+										{this.state.hotels.suggestions.map((entidade) => (
 											<tr>
 												<td>{entidade.type}</td>
 												<td>{entidade.name}</td>
