@@ -17,12 +17,15 @@ class TravelSearches extends Component {
 			cidade_destino: '',
 			data_ida: '',
             data_volta: '',
-            flights: [],
-            hotels: []
+            flights: this.props.location.state.flights,
+            hotels: this.props.location.state.hotels
         }
     }
 
 	render() {
+        this.state.flights = JSONtoArray(this.props.location.state.flights);
+        // this.state.hotels = JSONtoArray(this.props.location.state.hotels);
+
 		return (
 
             <div>
@@ -41,36 +44,45 @@ class TravelSearches extends Component {
                 {console.log("tipo desse caray:" + typeof this.props.location.state.flights )}
                 {console.log("tipo desse caray2: " + typeof this.props.location.state.hotels )}
 
-                {this.state.flights = JSONtoArray(this.props.location.state.flights)}
-                {/* {this.state.hotels = JSONtoArray(this.props.location.state.hotels)}
-                {console.log(this.state.hotels)} */}
+                {/* {this.state.flights = JSONtoArray(this.props.location.state.flights)} */}
+                {/* {this.state.hotels = JSONtoArray(this.props.location.state.hotels)} */}
+                {console.log(this.props.location.state.hotels)} 
+                {console.log(this.state.hotels)} 
 
-					{/* <Row>
+					<Row>
 						<Col m={6} s={12}>
 							<Card
-								// className="purple"
-								// textClassName="white-text"
-								// title={this.state.hotels.term}
+								className="purple"
+								textClassName="white-text"
+								title={this.state.hotels.term}
 							>
 								<Table>
 									 <tbody>
-										{this.state.hotels.suggestions.map((entidade) => (
-											<tr>
-												<td>{entidade.type}</td>
-												<td>{entidade.name}</td>
-												<td>
-													<IoIosAddCircleOutline
-														size={22}
-														color="#EEE"
-													/>
-												</td>
-											</tr>
+										{this.state.hotels.suggestions.map((suggestions) => (
+                                            <div>
+
+                                                { 
+                                                    suggestions.entities.map((entities) =>
+                                                    <tr>
+                                                        <td>{entities.name}</td>
+                                                        <td>{entities.caption}</td>
+                                                        <td>
+                                                        <IoIosAddCircleOutline
+                                                            size={22}
+                                                            color="#EEE"
+                                                        />
+                                                        </td>
+                                                    </tr>
+                                                    )
+                                                }
+
+											</div>
 										))}
 									</tbody> 
 								</Table>
 							</Card>
 						</Col>
-					</Row> */}
+					</Row>
 			</div>
 		);
 	}
