@@ -42,8 +42,6 @@ class TravelSearches extends Component {
 						</p>
 					</div>
 				)}
-				<h2>Hospedagem:</h2>
-				{console.log(this.props.location.state.hotels.suggestions)}
 				<div>
 					{this.props.location.state.hotels.suggestions.map(
 						(passeio) => (
