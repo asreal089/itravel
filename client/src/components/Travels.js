@@ -9,6 +9,7 @@ import { Col } from 'react-materialize';
 import { Card } from 'react-materialize';
 import { Table } from 'react-materialize';
 import { IoIosAddCircleOutline } from 'react-icons/io';
+import TravelsSearches from './TravelSearches';
 
 /** novo datepicker */
 import DatePicker from 'react-datepicker';
@@ -91,7 +92,26 @@ class Travels extends Component {
 			this.state.data_ida,
 			this.state.data_volta
 		);
+		var hotel = await getHotels(
+			this.state.cidade_destino
+		);
 		console.log(res.data);
+		console.log(hotel.data);
+		
+
+		this.props.history.push({ // redireciona para travelsearches
+			pathname: '/travelsearches',
+			state: {
+				cidade_origem: this.state.cidade_origem,
+				cidade_destino: this.state.cidade_destino,
+				data_ida: this.state.data_ida,
+				data_volta: this.state.data_volta,
+				teste: this.state.teste,
+				flights: res.data,
+				hotels: hotel.data
+			}
+		  }); 
+
 		// showResults(res2.data);
 	}
 
@@ -223,6 +243,7 @@ async function getHotels(cidadeDestino) {
 	var res = await axios({
 		method: 'GET',
 		url: 'https://hotels4.p.rapidapi.com/locations/search',
+		responseType: 'json',
 		headers: {
 			'content-type': 'application/octet-stream',
 			'x-rapidapi-host': 'hotels4.p.rapidapi.com',
@@ -231,7 +252,7 @@ async function getHotels(cidadeDestino) {
 			useQueryString: true,
 		},
 		params: {
-			locale: 'en_US',
+			locale: 'pt_BR',
 			query: cidadeDestino,
 		},
 	});
@@ -244,7 +265,7 @@ async function getVoos(cidadeOrigem, cidadeDestino, dataIda, dataVolta) {
 			method: 'GET',
 			url:
 				'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
-
+			responseType: 'json',
 			headers: {
 				'x-access-token': '15a20173bc9561f1d4f8c7f7ee9f34c4',
 				'x-rapidapi-host':
@@ -268,6 +289,7 @@ async function getVoos(cidadeOrigem, cidadeDestino, dataIda, dataVolta) {
 			url:
 				'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap',
 
+			responseType: 'json',
 			headers: {
 				'x-access-token': '15a20173bc9561f1d4f8c7f7ee9f34c4',
 				'x-rapidapi-host':

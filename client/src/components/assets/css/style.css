@@ -31,3 +31,13 @@ body {
 #origem, #destino, .input-field{
     display: inline-block;
 }
+
+.container h1 {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.container h2 {
+    font-size: 19px;
+    font-weight: bold;
+}
