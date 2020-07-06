@@ -95,10 +95,10 @@ class Travels extends Component {
 		var hotel = await getHotels(
 			this.state.cidade_destino
 		);
+
 		console.log(res.data);
 		console.log(hotel.data);
-		
-
+	
 		this.props.history.push({ // redireciona para travelsearches
 			pathname: '/travelsearches',
 			state: {

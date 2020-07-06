@@ -41,3 +41,7 @@ body {
     font-size: 19px;
     font-weight: bold;
 }
+
+.col {
+    padding: 0px!important;
+}
