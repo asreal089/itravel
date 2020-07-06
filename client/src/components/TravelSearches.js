@@ -39,7 +39,7 @@ class TravelSearches extends Component {
                 <h2>Passagens Aéreas:</h2>
                 <p>{JSON.stringify(this.props.location.state.flights)}</p>
                 <h2>Hospedagem:</h2>
-                <p>{JSON.stringify(this.props.location.state.hotels)}</p>
+                {/* <p>{JSON.stringify(this.props.location.state.hotels)}</p> */}
 
                 {console.log("tipo desse caray:" + typeof this.props.location.state.flights )}
                 {console.log("tipo desse caray2: " + typeof this.props.location.state.hotels )}
@@ -50,9 +50,9 @@ class TravelSearches extends Component {
                 {console.log(this.state.hotels)} 
 
 					<Row>
-						<Col m={6} s={12}>
+						<Col m={12} s={12}>
 							<Card
-								className="purple"
+								className="purple lighten-1"
 								textClassName="white-text"
 								title={this.state.hotels.term}
 							>
@@ -63,10 +63,10 @@ class TravelSearches extends Component {
 
                                                 { 
                                                     suggestions.entities.map((entities) =>
-                                                    <tr>
-                                                        <td>{entities.name}</td>
-                                                        <td>{entities.caption}</td>
-                                                        <td>
+                                                    <tr width="100">
+                                                        <td width="25%">{entities.name}</td>
+                                                        <td width="70%">{entities.caption}</td>
+                                                        <td width="5%">
                                                         <IoIosAddCircleOutline
                                                             size={22}
                                                             color="#EEE"
